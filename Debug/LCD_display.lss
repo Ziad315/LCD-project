@@ -3152,6 +3152,7 @@ _delay_loop_2(uint16_t __count)
     1672:	ff 4f       	sbci	r31, 0xFF	; 255
     1674:	91 83       	std	Z+1, r25	; 0x01
     1676:	80 83       	st	Z, r24
+#if  LCD_Mode == 4
 
 	_delay_ms(50);
 	DIO_setPinDirection(LCD_DATA_PORT ,PIN4 ,OUTPUT);
@@ -3191,7 +3192,7 @@ _delay_loop_2(uint16_t __count)
     16b8:	41 e0       	ldi	r20, 0x01	; 1
     16ba:	0e 94 9b 05 	call	0xb36	; 0xb36 <DIO_setPinDirection>
 
-	LCD_sendCommand(0x02);
+	LCD_sendCommand(SET_HOME);                     //Set Home
     16be:	82 e0       	ldi	r24, 0x02	; 2
     16c0:	0e 94 eb 0d 	call	0x1bd6	; 0x1bd6 <LCD_sendCommand>
     16c4:	fe 01       	movw	r30, r28
@@ -3351,7 +3352,7 @@ _delay_ms(double __ms)
     17ca:	9a af       	std	Y+58, r25	; 0x3a
     17cc:	89 af       	std	Y+57, r24	; 0x39
 	_delay_ms(30);
-	LCD_sendCommand(0x28);       //Function set
+	LCD_sendCommand(Four_bits);                    //Function set
     17ce:	88 e2       	ldi	r24, 0x28	; 40
     17d0:	0e 94 eb 0d 	call	0x1bd6	; 0x1bd6 <LCD_sendCommand>
     17d4:	80 e0       	ldi	r24, 0x00	; 0
@@ -3492,7 +3493,7 @@ _delay_ms(double __ms)
     18b4:	9c a7       	std	Y+44, r25	; 0x2c
     18b6:	8b a7       	std	Y+43, r24	; 0x2b
 	_delay_ms(1);
-	LCD_sendCommand(0x0c);       //display ON
+	LCD_sendCommand(DISPLAY_ON_CURSOR_OFF);        //display ON
     18b8:	8c e0       	ldi	r24, 0x0C	; 12
     18ba:	0e 94 eb 0d 	call	0x1bd6	; 0x1bd6 <LCD_sendCommand>
     18be:	80 e0       	ldi	r24, 0x00	; 0
@@ -3633,7 +3634,7 @@ _delay_ms(double __ms)
     199e:	9e 8f       	std	Y+30, r25	; 0x1e
     19a0:	8d 8f       	std	Y+29, r24	; 0x1d
 	_delay_ms(1);
-	LCD_sendCommand(0x01);       //Display clear
+	LCD_sendCommand(DISPLAY_CLEAR);                //Display clear
     19a2:	81 e0       	ldi	r24, 0x01	; 1
     19a4:	0e 94 eb 0d 	call	0x1bd6	; 0x1bd6 <LCD_sendCommand>
     19a8:	80 e0       	ldi	r24, 0x00	; 0
@@ -3774,7 +3775,7 @@ _delay_ms(double __ms)
     1a88:	98 8b       	std	Y+16, r25	; 0x10
     1a8a:	8f 87       	std	Y+15, r24	; 0x0f
 	_delay_ms(10);
-	LCD_sendCommand(0x06);
+	LCD_sendCommand(ENTRY_MODE);                   //Entry Mode
     1a8c:	86 e0       	ldi	r24, 0x06	; 6
     1a8e:	0e 94 eb 0d 	call	0x1bd6	; 0x1bd6 <LCD_sendCommand>
     1a92:	80 e0       	ldi	r24, 0x00	; 0
@@ -3916,7 +3917,7 @@ _delay_ms(double __ms)
     1b74:	89 83       	std	Y+1, r24	; 0x01
 	_delay_ms(1);
 
-
+#endif
 }
     1b76:	cc 5a       	subi	r28, 0xAC	; 172
     1b78:	df 4f       	sbci	r29, 0xFF	; 255
@@ -3943,7 +3944,7 @@ void LCD_sendData                  (uint8 copy_Data)
     1b94:	cd b7       	in	r28, 0x3d	; 61
     1b96:	de b7       	in	r29, 0x3e	; 62
     1b98:	89 83       	std	Y+1, r24	; 0x01
-
+#if LCD_Mode == 4
 	DIO_setPinValue(LCD_CONTROL_PORT ,LCD_RS,HIGH);
     1b9a:	81 e0       	ldi	r24, 0x01	; 1
     1b9c:	61 e0       	ldi	r22, 0x01	; 1
@@ -3970,7 +3971,7 @@ void LCD_sendData                  (uint8 copy_Data)
     1bc6:	0e 94 fd 09 	call	0x13fa	; 0x13fa <DIO_setHighFourPins>
 	LCD_SendFallingEdge();
     1bca:	0e 94 0f 0e 	call	0x1c1e	; 0x1c1e <LCD_SendFallingEdge>
-
+#endif
 }
     1bce:	0f 90       	pop	r0
     1bd0:	cf 91       	pop	r28
@@ -3988,7 +3989,7 @@ void LCD_sendCommand                 (uint8 copy_Data)
     1bdc:	cd b7       	in	r28, 0x3d	; 61
     1bde:	de b7       	in	r29, 0x3e	; 62
     1be0:	89 83       	std	Y+1, r24	; 0x01
-
+#if LCD_Mode == 4
 	DIO_setPinValue(LCD_CONTROL_PORT ,LCD_RS,LOW);
     1be2:	81 e0       	ldi	r24, 0x01	; 1
     1be4:	61 e0       	ldi	r22, 0x01	; 1
@@ -4015,7 +4016,7 @@ void LCD_sendCommand                 (uint8 copy_Data)
     1c0e:	0e 94 fd 09 	call	0x13fa	; 0x13fa <DIO_setHighFourPins>
 	LCD_SendFallingEdge();
     1c12:	0e 94 0f 0e 	call	0x1c1e	; 0x1c1e <LCD_SendFallingEdge>
-
+#endif
 }
     1c16:	0f 90       	pop	r0
     1c18:	cf 91       	pop	r28

@@ -18,6 +18,7 @@
 
 void LCD_voidinit                  (void)
 {
+#if  LCD_Mode == 4
 
 	_delay_ms(50);
 	DIO_setPinDirection(LCD_DATA_PORT ,PIN4 ,OUTPUT);
@@ -40,34 +41,34 @@ void LCD_voidinit                  (void)
 	LCD_sendCommand(ENTRY_MODE);                   //Entry Mode
 	_delay_ms(1);
 
-
+#endif
 }
 
 
 
 void LCD_sendData                  (uint8 copy_Data)
 {
-
+#if LCD_Mode == 4
 	DIO_setPinValue(LCD_CONTROL_PORT ,LCD_RS,HIGH);
 	DIO_setPinValue(LCD_CONTROL_PORT ,LCD_RW ,LOW);
 	DIO_setHighFourPins(LCD_DATA_PORT,(copy_Data>>4));
 	LCD_SendFallingEdge();
 	DIO_setHighFourPins(LCD_DATA_PORT,copy_Data);
 	LCD_SendFallingEdge();
-
+#endif
 }
 
 
 void LCD_sendCommand                 (uint8 copy_Data)
 {
-
+#if LCD_Mode == 4
 	DIO_setPinValue(LCD_CONTROL_PORT ,LCD_RS,LOW);
 	DIO_setPinValue(LCD_CONTROL_PORT ,LCD_RW ,LOW);
 	DIO_setHighFourPins(LCD_DATA_PORT,(copy_Data>>4));
 	LCD_SendFallingEdge();
 	DIO_setHighFourPins(LCD_DATA_PORT,copy_Data);
 	LCD_SendFallingEdge();
-
+#endif
 }
 
 void LCD_SendFallingEdge (void)
