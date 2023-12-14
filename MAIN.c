@@ -12,19 +12,12 @@
 
 int main(void)
 {
-		LCD_voidinit();
-		_delay_ms(100);
-		LCD_sendData('Z');
-		LCD_sendData('I');
-		LCD_sendData('A');
-		LCD_sendData('D');
-		LCD_sendData(' ');
-		LCD_sendData('Y');
-		LCD_sendData('A');
-		LCD_sendData('K');
-		LCD_sendData('O');
-		LCD_sendData('O');
-		LCD_sendData('T');
+	LCD_voidinit();
+	_delay_ms(100);
+	LCD_voidString("Hello World !");
+	_delay_ms(1000);
+	LCD_ClearScreen();
+	LCD_voidString("Ziad Yakoot");
 
 }
 

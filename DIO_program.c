@@ -156,11 +156,11 @@ uint8 DIO_uint8_getPinValue(uint8 copy_port,uint8 copy_pin,uint8 *copy_pinValue)
 	{
 		switch(copy_port)
 				 {
-							case DIO_PORTA:*copy_pinValue=GET_BIT(PINA ,copy_pin);break;
-							case DIO_PORTB:*copy_pinValue=GET_BIT(PINB ,copy_pin);break;
-							case DIO_PORTC:*copy_pinValue=GET_BIT(PINC ,copy_pin);break;
-							case DIO_PORTD:*copy_pinValue=GET_BIT(PIND ,copy_pin);break;
-							default:local_errorStatus =1;break;
+						case DIO_PORTA:*copy_pinValue=GET_BIT(PINA ,copy_pin);break;
+						case DIO_PORTB:*copy_pinValue=GET_BIT(PINB ,copy_pin);break;
+						case DIO_PORTC:*copy_pinValue=GET_BIT(PINC ,copy_pin);break;
+						case DIO_PORTD:*copy_pinValue=GET_BIT(PIND ,copy_pin);break;
+						default:local_errorStatus =1;break;
 				 }
 	}
 	else

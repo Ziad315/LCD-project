@@ -33,6 +33,7 @@ void LCD_voidinit                  (void)
 	LCD_sendCommand(SET_HOME);                     //Set Home
 	_delay_ms(30);
 	LCD_sendCommand(Four_bits);                    //Function set
+	LCD_sendCommand(0x80);
 	_delay_ms(1);
 	LCD_sendCommand(DISPLAY_ON_CURSOR_OFF);        //display ON
 	_delay_ms(1);
@@ -77,5 +78,25 @@ void LCD_SendFallingEdge (void)
 	_delay_ms(1);
 	DIO_setPinValue(LCD_CONTROL_PORT ,LCD_EN ,LOW);
 	_delay_ms(1);
+}
+
+void LCD_ClearScreen(void)
+{
+	LCD_sendCommand(DISPLAY_CLEAR);
+}
+
+void LCD_voidString                (uint8 * copy_String)
+{
+	uint8 stringIndex = 0;
+	while(copy_String[stringIndex]!= '\0')
+	{
+		LCD_sendData(copy_String[stringIndex]);
+		stringIndex ++;
+	}
+}
+
+void LCD_voidSpace                  (void                )
+{
+	LCD_sendData(' ');
 }
 #endif /* LCD_PROGRAM_C_ */
